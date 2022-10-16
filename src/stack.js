@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError, ListNode } = require("../extensions/index.js");
 
 /**
  * Implement the Stack with a given interface via array.
@@ -13,22 +13,64 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 class Stack {
-  push(/* element */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor() {
+    this.head = null;
+    this.length = 0;
+  }
+  push(el) {
+    if (this.length === 0) {
+      this.head = new ListNode(el);
+    } else {
+      let current = this.head;
+      while (current.next) {
+        current = current.next;
+      }
+      current.next = new ListNode(el);
+    }
+    this.length++;
   }
 
   pop() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.length === 0) {
+      return;
+    } else {
+      let prev = null;
+      let current = this.head;
+      let i = 0;
+      while (i < this.length - 1) {
+        prev = current;
+        current = current.next;
+        i++;
+        console.log(current);
+      }
+      this.length--;
+      prev.next = current;
+      return current.value;
+    }
   }
 
   peek() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    if (this.length === 0) {
+      return;
+    } else {
+      let current = this.head;
+      let i = 0;
+      while (i < this.length - 1) {
+        current = current.next;
+        i++;
+      }
+      return current.value;
+    }
   }
 }
+let xx = new Stack();
+console.log(xx.push("ss"));
+console.log(xx.push("bb"));
+console.log(xx.push("aa"));
+console.log(xx.peek());
+console.log(xx.pop());
+console.log(xx.peek());
 
 module.exports = {
-  Stack
+  Stack,
 };
