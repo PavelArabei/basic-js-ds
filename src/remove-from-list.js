@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 // const { ListNode } = require('../extensions/list-node.js');
 
@@ -22,11 +22,65 @@ const { NotImplementedError } = require('../extensions/index.js');
  *   }
  * }
  */
-function removeKFromList(/* l, k */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+
+class ListNode {
+  constructor(x) {
+    this.value = x;
+    this.next = null;
+  }
 }
 
+function convertArrayToList(arr) {
+  return arr.reverse().reduce((acc, cur) => {
+    if (acc) {
+      const node = new ListNode(cur);
+      node.next = acc;
+      return node;
+    }
+
+    return new ListNode(cur);
+  }, null);
+}
+function toArray(obj) {
+  let array = [];
+  // iterate backwards ensuring that length is an UInt32
+  for (var i = obj.length > 0; i--; ) {
+    array[i] = obj[i];
+  }
+  return array;
+}
+
+let l = [1, 2, 3];
+l = convertArrayToList(l);
+let k = 3;
+
+function removeKFromList(l, k) {
+  let current = l;
+  let prev = current;
+  while (current) {
+    if (current.next !== null) {
+      if (current.next.next == null && current.next.value == k) {
+        current.next = null;
+      }
+    }
+
+    if (current.value == k && current.next !== null) {
+      prev.next = current.next;
+    }
+    if (current.value !== k) {
+      prev = current;
+    }
+    current = current.next;
+  }
+  if (l.value == k) {
+    return l.next;
+  } else {
+    return l;
+  }
+}
+
+console.log(removeKFromList(l, k));
+
 module.exports = {
-  removeKFromList
+  removeKFromList,
 };
